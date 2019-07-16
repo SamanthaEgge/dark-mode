@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import useLocalStorage from './useLocalStorage'
 
-const useDarkMode = () => {
-    const [darkMode, setDarkMode] = useLocalStorage('darkToggle', darkMode)
+const useDarkMode = (key, initialValue) => {
+    console.log('requested cl', key, initialValue)
+    const [darkMode, setDarkMode] = useLocalStorage(key, initialValue);
 
-    const handleToggle = (event) => {
-        setDarkMode(!darkMode)
-    }
-    
-    const bodyElem = document.querySelector('.body')
+    // const handleToggle = (event) => {
+    //     event.preventDefault()
+    //     setDarkMode(!darkMode)
+    // }
+    console.log('weve reached useDarkMode')
 
     useEffect(() => {
-        {darkMode === false 
-            ? bodyElem.classList.add('dark-mode')
-            : bodyElem.classList.remove('dark-mode')}
-        console.log('bodyElem', bodyElem)
+        {darkMode === true
+            ? document.body.classList.add('dark-mode')
+            : document.body.classList.remove('dark-mode')}
+        // console.log('bodyElem', bodyElem)
         console.log('darkMode in useEffect', darkMode)
     }, [darkMode])
 
-    return handleToggle()
+    return (
+        [darkMode, setDarkMode]
+    )
 }
 
 export default useDarkMode;
